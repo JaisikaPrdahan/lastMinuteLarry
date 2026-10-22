@@ -1,10 +1,10 @@
 'use client';
-import Link from 'next/link';
 import { useState } from 'react';
 import type { AppState } from '@/lib/types';
 import { addSubject, seedStarter } from '@/lib/actions';
 import { diffDays } from '@/lib/dates';
-import { COLORS, ColorPick, Empty, Err, Icon, Progress, Sheet, useRun } from './ui';
+import FolderGrid from './FolderGrid';
+import { COLORS, ColorPick, Empty, Err, Icon, Sheet, useRun } from './ui';
 
 export default function SubjectsView({ state }: { state: AppState }) {
   const { subjects, chapters, materials, exams, today } = state;
@@ -59,46 +59,17 @@ export default function SubjectsView({ state }: { state: AppState }) {
           </Empty>
         </section>
       ) : (
-        <div className="grid two">
-          {subjects.map((s) => {
-            const chs = chapters.filter((c) => c.subject_id === s.id);
-            const ms = materials.filter((m) => m.subject_id === s.id);
-            const done = ms.filter((m) => m.done).length;
-            const ppt = ms.filter((m) => m.kind !== 'program');
-            const prog = ms.filter((m) => m.kind === 'program');
-            const next = exams.filter((e) => e.subject_id === s.id && e.exam_date >= today).sort((a, b) => a.exam_date.localeCompare(b.exam_date))[0];
-            const days = next ? diffDays(today, next.exam_date) : null;
-            return (
-              <Link key={s.id} href={`/subjects/${s.id}`} className="card col" style={{ gap: 10 }}>
-                <div className="row">
-                  <span className="dot" style={{ background: s.color, width: 14, height: 14 }} />
-                  <h2 style={{ flex: 1 }}>{s.name}</h2>
-                  <Icon name="chevron" />
-                </div>
-                <Progress value={done} max={ms.length} color={s.color} />
-                <div className="row wrap gap-s">
-                  <span className="small strong">
-                    {done}/{ms.length} units
-                  </span>
-                  <span className="small muted">· {chs.length} chapter{chs.length === 1 ? '' : 's'}</span>
-                </div>
-                <div className="row wrap gap-s">
-                  {ppt.length > 0 && (
-                    <span className="badge">
-                      PPT {ppt.filter((m) => m.done).length}/{ppt.length}
-                    </span>
-                  )}
-                  {prog.length > 0 && (
-                    <span className="badge">
-                      Programs {prog.filter((m) => m.done).length}/{prog.length}
-                    </span>
-                  )}
-                  {days !== null && <span className={`badge ${days <= 3 ? 'bad' : days <= 10 ? 'warn' : 'accent'}`}>Exam {days === 0 ? 'today' : `in ${days}d`}</span>}
-                </div>
-              </Link>
-            );
-          })}
-        </div>
+        <FolderGrid
+          subjects={subjects}
+          chapters={chapters}
+          materials={materials}
+          examDays={Object.fromEntries(
+            subjects.map((s) => {
+              const next = exams.filter((e) => e.subject_id === s.id && e.exam_date >= today).sort((x, y) => x.exam_date.localeCompare(y.exam_date))[0];
+              return [s.id, next ? diffDays(today, next.exam_date) : null];
+            }),
+          )}
+        />
       )}
 
       {adding && (

@@ -228,3 +228,13 @@ label.field > .hint { font-weight: 400; }
 .rank { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 750; font-size: 13px; background: var(--accent-soft); color: var(--accent); }
 
 .bottom-gap { height: 12px; }
+
+/* ---- login hero (liquid sculpture) ---- */
+.sh-login { max-width: 360px; }
+.sh-login .field { color: inherit; }
+.sh-login .input { background: color-mix(in srgb, var(--sh-fg) 6%, transparent); color: var(--sh-fg); border-color: color-mix(in srgb, var(--sh-fg) 25%, transparent); }
+.sh-login .btn.primary { background: var(--sh-fg); color: var(--sh-bg); border-radius: 999px; }
+
+/* ---- subject folders ---- */
+.folders { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px 20px; justify-items: center; padding: 8px 0 24px; }
+.folder-cell { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 100%; }
