@@ -77,7 +77,7 @@ h3 { font-size: 14px; }
   .side-link svg { width: 20px; height: 20px; }
   .side-link:hover { background: var(--card-2); }
   .side-link.on { background: var(--accent-soft); color: var(--accent); }
-  .tabbar, .topbar .gear, .topbar .brand { display: none; }
+  .tabbar, .topbar .gear, .topbar a[aria-label="Home"] { display: none; }
   .main { padding: 26px 28px 40px; }
 }
 

@@ -38,6 +38,7 @@ export default function Shell({ children }: { children: ReactNode }) {
     <div className="app">
       <aside className="sidebar">
         <div className="brand">
+          <img src="/icons/icon-192.png" alt="" width={30} height={30} style={{ borderRadius: 9 }} />
           Tracker
         </div>
         {NAV.map((n) => (
@@ -57,6 +58,7 @@ export default function Shell({ children }: { children: ReactNode }) {
         <main className="main">
           <div className="topbar">
             <Link href="/" className="row" style={{ gap: 8 }} aria-label="Home">
+              <img src="/icons/icon-192.png" alt="" width={26} height={26} style={{ borderRadius: 8 }} />
               <span className="brand">Tracker</span>
             </Link>
             <Link href="/settings" className="btn ghost icon gear" aria-label="Settings">
