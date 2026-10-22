@@ -122,8 +122,39 @@ export function Matrix({
     for (const d of days) cols.push({ key: d, lo: d, hi: d });
   }
   const tmpl = `64px repeat(${cols.length}, minmax(0, 1fr))`;
+  // phone layout (per-day only): one small square calendar per series, 7 columns wide
+  const padStart = dow(from) - weekStart < 0 ? dow(from) - weekStart + 7 : dow(from) - weekStart;
+  const heads = [0, 1, 2, 3, 4, 5, 6].map((i) => ['S', 'M', 'T', 'W', 'T', 'F', 'S'][(weekStart + i) % 7]);
   return (
-    <div className="matrix" style={{ gridTemplateColumns: tmpl }} role="img" aria-label="Active and missed days">
+    <>
+    {!byWeek && (
+      <div className="matrix-phone">
+        {rows.map((r) => (
+          <div key={r.label} className="mp-block">
+            <span className="rowlbl">{r.label}</span>
+            <div className="mp-grid">
+              {heads.map((h, i) => (
+                <span key={'h' + i} className="hd">
+                  {h}
+                </span>
+              ))}
+              {Array.from({ length: padStart }, (_, i) => (
+                <i key={'p' + i} className="pad" />
+              ))}
+              {days.map((d) => (
+                <i
+                  key={d}
+                  className={d === today ? 'today' : ''}
+                  style={{ background: r.value(d) > 0 ? r.color : undefined }}
+                  title={`${fmt(d, { weekday: 'short', day: 'numeric', month: 'short' })}: ${r.value(d) > 0 ? 'active' : 'missed'}`}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+    <div className={'matrix' + (byWeek ? '' : ' matrix-wide')} style={{ gridTemplateColumns: tmpl }} role="img" aria-label="Active and missed days">
       <span />
       {cols.map((c) => (
         <span className="hd" key={c.key}>
@@ -141,6 +172,7 @@ export function Matrix({
         {fmt(to, { day: 'numeric', month: 'short' })}
       </span>
     </div>
+    </>
   );
 }
 

@@ -238,7 +238,7 @@ label.field > .hint { font-weight: 400; }
 .sh-login .btn.primary { background: var(--sh-fg); color: var(--sh-bg); border-radius: 999px; }
 
 /* ---- subject folders ---- */
-.folders { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px 20px; justify-items: center; padding: 8px 0 24px; }
+.folders { background-image: radial-gradient(color-mix(in srgb, var(--text) 14%, transparent) 1.1px, transparent 1.4px); background-size: 22px 22px; border-radius: var(--radius); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px 20px; justify-items: center; padding: 28px 12px 32px; }
 .folder-cell { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 100%; }
 
 /* ---- unified look: same warm ink-on-paper system as the login hero ---- */
@@ -250,3 +250,28 @@ label.field > .hint { font-weight: 400; }
 .tabbar { border-radius: 26px 26px 0 0; border: 1px solid var(--line); border-bottom: 0; }
 .section-title h2, .section-title h3 { font-family: var(--head); text-transform: uppercase; font-size: 11.5px; letter-spacing: 0.14em; font-weight: 500; color: var(--muted); }
 .login .card { border-radius: 28px; }
+
+/* dotted desk behind every inner page, same as Subjects */
+.app { background-image: radial-gradient(color-mix(in srgb, var(--text) 14%, transparent) 1.1px, transparent 1.4px); background-size: 22px 22px; }
+.sidebar { background: var(--bg); }
+.folders { background-image: none; }
+
+/* ---- phone proportions ---- */
+.matrix-phone { display: none; }
+.folder-cap { display: none; }
+@media (max-width: 699px) {
+  .matrix-phone { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 14px; }
+  .matrix.matrix-wide { display: none; }
+  .mp-block .rowlbl { display: block; font-size: 13px; font-weight: 650; margin-bottom: 6px; }
+  .mp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .mp-grid .hd { font-size: 9.5px; color: var(--muted); text-align: center; }
+  .mp-grid i { aspect-ratio: 1; border-radius: 4px; background: var(--cell); display: block; min-width: 0; }
+  .mp-grid i.pad { background: transparent; }
+  .mp-grid i.today { outline: 1.5px solid var(--text); outline-offset: 1px; }
+  .folders { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 14px; padding: 20px 8px 24px; }
+  .folder-cell { gap: 8px; }
+  .folder-cell .gf-label { display: none; }
+  .folder-cap { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; }
+  .folder-cap strong { font-size: 15px; }
+  .folder-cap span { font-size: 11.5px; color: var(--muted); }
+}
