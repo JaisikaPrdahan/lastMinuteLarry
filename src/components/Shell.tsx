@@ -39,7 +39,7 @@ export default function Shell({ children }: { children: ReactNode }) {
       <aside className="sidebar">
         <div className="brand">
           <img src="/icons/icon-192.png" alt="" width={30} height={30} style={{ borderRadius: 9 }} />
-          Tracker
+          Last Minute Larry
         </div>
         {NAV.map((n) => (
           <Link key={n.href} href={n.href} className={`side-link ${isOn(path, n.href) ? 'on' : ''}`}>
@@ -59,7 +59,7 @@ export default function Shell({ children }: { children: ReactNode }) {
           <div className="topbar">
             <Link href="/" className="row" style={{ gap: 8 }} aria-label="Home">
               <img src="/icons/icon-192.png" alt="" width={26} height={26} style={{ borderRadius: 8 }} />
-              <span className="brand">Tracker</span>
+              <span className="brand">Last Minute Larry</span>
             </Link>
             <Link href="/settings" className="btn ghost icon gear" aria-label="Settings">
               <Icon name="gear" />

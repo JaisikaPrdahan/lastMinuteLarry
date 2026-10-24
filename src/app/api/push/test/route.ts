@@ -10,6 +10,6 @@ export async function POST() {
       { status: 500 },
     );
   }
-  const r = await sendPushToAll({ title: 'Tracker', body: 'Notifications are working on this device.', tag: 'test' });
+  const r = await sendPushToAll({ title: 'Last Minute Larry', body: 'Notifications are working on this device.', tag: 'test' });
   return NextResponse.json({ ok: r.sent > 0, ...r });
 }

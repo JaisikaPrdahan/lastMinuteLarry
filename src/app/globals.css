@@ -72,7 +72,7 @@ h3 { font-size: 14px; }
     display: flex; flex-direction: column; gap: 4px; position: sticky; top: 0; height: 100dvh;
     padding: 22px 14px; border-right: 1px solid var(--line); background: var(--card);
   }
-  .sidebar .brand { font-weight: 750; font-size: 18px; padding: 0 10px 16px; display: flex; align-items: center; gap: 10px; }
+  .sidebar .brand { font-weight: 750; font-size: 18px; line-height: 1.1; padding: 0 10px 16px; display: flex; align-items: center; gap: 10px; }
   .side-link { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; font-weight: 600; color: var(--muted); }
   .side-link svg { width: 20px; height: 20px; }
   .side-link:hover { background: var(--card-2); }
@@ -275,3 +275,8 @@ label.field > .hint { font-weight: 400; }
   .folder-cap strong { font-size: 15px; }
   .folder-cap span { font-size: 11.5px; color: var(--muted); }
 }
+
+/* junk food counter */
+:root { --c-junk: light-dark(#c2410c, #ff8a5c); }
+.junk-n { min-width: 28px; text-align: center; font-family: var(--serif); font-size: 28px; font-weight: 400; }
+.sidebar .brand { font-size: 21px; line-height: 1.05; }

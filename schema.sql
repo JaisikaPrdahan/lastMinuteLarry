@@ -52,7 +52,7 @@ create table if not exists study_sessions (
 
 create table if not exists habit_logs (
   log_date date not null,
-  kind text not null check (kind in ('gym','dsa','breakfast','lunch','dinner')),
+  kind text not null check (kind in ('gym','dsa','breakfast','lunch','dinner','junk')),
   count int not null default 1,
   note text,
   created_at timestamptz not null default now(),
@@ -85,3 +85,7 @@ create index if not exists idx_sessions_date on study_sessions (session_date);
 create index if not exists idx_chapters_subject on chapters (subject_id);
 create index if not exists idx_materials_chapter on materials (chapter_id);
 create index if not exists idx_exams_date on exams (exam_date);
+
+-- upgrade older databases: allow the 'junk' kind
+alter table habit_logs drop constraint if exists habit_logs_kind_check;
+alter table habit_logs add constraint habit_logs_kind_check check (kind in ('gym','dsa','breakfast','lunch','dinner','junk'));

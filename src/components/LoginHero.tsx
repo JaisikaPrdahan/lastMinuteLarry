@@ -11,13 +11,13 @@ export default function LoginHero() {
   return (
     <SculptureHero
       theme={theme}
-      brand="Tracker"
+      brand="Last Minute Larry"
       navLinks={[]}
       navCta={{ label: '', href: '#' }}
       eyebrow="Private · study · gym · DSA · mess"
       headline={'Show up.\nKeep the streak.'}
       headlineAccent="Keep the streak."
-      backdropText="tracker"
+      backdropText="larry"
       hint="Move across the form"
       aside={<div className="sh-login"><LoginForm /></div>}
     />

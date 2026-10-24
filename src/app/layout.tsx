@@ -2,11 +2,11 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: { default: 'Tracker', template: '%s · Tracker' },
+  title: { default: 'Last Minute Larry', template: '%s · Last Minute Larry' },
   description: 'Personal study, gym, DSA and mess tracker',
   manifest: '/manifest.webmanifest',
   robots: { index: false, follow: false },
-  appleWebApp: { capable: true, title: 'Tracker', statusBarStyle: 'black-translucent' },
+  appleWebApp: { capable: true, title: 'Larry', statusBarStyle: 'black-translucent' },
   icons: { icon: '/icons/icon-192.png', apple: '/icons/apple-touch-icon.png' },
 };
 

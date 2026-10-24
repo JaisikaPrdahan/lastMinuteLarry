@@ -1,4 +1,4 @@
-# Tracker
+# Last Minute Larry
 
 A personal, password-protected study / gym / DSA / mess tracker you host yourself. It installs on your phone like an app (PWA), syncs between phone and laptop through your own database, and sends push notifications from the app itself (no Google Calendar needed).
 

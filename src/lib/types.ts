@@ -1,7 +1,7 @@
 export type Kind = 'ppt' | 'program' | 'other';
 export type Scope = 'all' | 'ppt' | 'program';
 export type ExamKind = 'theory' | 'practical';
-export type HabitKind = 'gym' | 'dsa' | 'breakfast' | 'lunch' | 'dinner';
+export type HabitKind = 'gym' | 'dsa' | 'breakfast' | 'lunch' | 'dinner' | 'junk';
 
 export interface Subject {
   id: number;
@@ -121,5 +121,6 @@ export const HABIT_LABEL: Record<HabitKind, string> = {
   breakfast: 'Breakfast',
   lunch: 'Lunch',
   dinner: 'Dinner',
+  junk: 'Junk food',
 };
 export const MEALS: HabitKind[] = ['breakfast', 'lunch', 'dinner'];

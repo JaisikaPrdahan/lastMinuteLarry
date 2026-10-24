@@ -264,7 +264,7 @@ export async function deleteSession(id: number): Promise<void> {
 // ---------- daily check-ins ----------
 export async function setHabit(date: string, kind: HabitKind, on: boolean, count = 1): Promise<void> {
   const d = dateOf(date);
-  const k = oneOf(kind, ['gym', 'dsa', 'breakfast', 'lunch', 'dinner'] as const, 'check-in');
+  const k = oneOf(kind, ['gym', 'dsa', 'breakfast', 'lunch', 'dinner', 'junk'] as const, 'check-in');
   if (!on) {
     await q('delete from habit_logs where log_date = $1 and kind = $2', [d, k]);
     return;

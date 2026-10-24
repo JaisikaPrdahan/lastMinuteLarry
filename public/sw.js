@@ -12,7 +12,7 @@ self.addEventListener('push', (event) => {
     data = { body: event.data ? event.data.text() : '' };
   }
   event.waitUntil(
-    self.registration.showNotification(data.title || 'Tracker', {
+    self.registration.showNotification(data.title || 'Last Minute Larry', {
       body: data.body || '',
       icon: '/icons/icon-192.png',
       badge: '/icons/badge-96.png',

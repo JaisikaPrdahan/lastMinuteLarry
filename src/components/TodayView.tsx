@@ -44,6 +44,15 @@ export default function TodayView({ state }: { state: AppState }) {
     run(() => setHabit(date, 'dsa', true, count));
   }
 
+  function setJunk(n: number) {
+    const count = Math.max(0, Math.min(50, n));
+    setHabits((prev) => [
+      ...prev.filter((h) => !(h.log_date === date && h.kind === 'junk')),
+      ...(count > 0 ? [{ log_date: date, kind: 'junk' as HabitKind, count, note: null }] : []),
+    ]);
+    run(() => setHabit(date, 'junk', count > 0, Math.max(1, count)));
+  }
+
   // week progress
   const ws = startOfWeek(date, settings.weekStart);
   const we = addDays(ws, 6);
@@ -58,6 +67,8 @@ export default function TodayView({ state }: { state: AppState }) {
 
   const studiedMin = state.sessions.filter((s) => s.session_date === date).reduce((a, s) => a + s.minutes, 0);
   const dsa = find('dsa');
+  const junkToday = find('junk')?.count ?? 0;
+  const junkWeek = habits.filter((h) => h.kind === 'junk' && h.log_date >= ws && h.log_date <= we).reduce((a, h) => a + h.count, 0);
   const top = plan.exams[0];
   const nextExam = plan.byDate[0];
 
@@ -116,6 +127,27 @@ export default function TodayView({ state }: { state: AppState }) {
           </div>
         )}
         <Err>{error}</Err>
+      </section>
+
+      <section className="card">
+        <div className="row">
+          <span className="emo" style={{ fontSize: 26 }}>🍟</span>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <h2>Junk food</h2>
+            <p className="small muted">
+              {junkToday === 0 ? 'None logged' : `${junkToday} time${junkToday === 1 ? '' : 's'}`} · {junkWeek} this week
+            </p>
+          </div>
+          <div className="row gap-s">
+            <button className="btn icon" onClick={() => setJunk(junkToday - 1)} disabled={junkToday === 0} aria-label="One less">
+              −
+            </button>
+            <strong className="junk-n">{junkToday}</strong>
+            <button className="btn icon" onClick={() => setJunk(junkToday + 1)} aria-label="One more">
+              +
+            </button>
+          </div>
+        </div>
       </section>
 
       <section className="card">

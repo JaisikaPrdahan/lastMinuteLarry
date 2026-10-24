@@ -42,6 +42,26 @@ export default function StatsView({ state }: { state: AppState }) {
   const dsaProblems = inRange(habits.filter((h) => h.kind === 'dsa')).reduce((a, h) => a + h.count, 0);
   const mealCount = (k: HabitKind) => inRange(habits.filter((h) => h.kind === k)).length;
   const meals = MEALS.reduce((a, k) => a + mealCount(k), 0);
+  const junkRows = inRange(habits.filter((h) => h.kind === 'junk'));
+  const junkTotal = junkRows.reduce((a, h) => a + h.count, 0);
+  const junkDays = junkRows.length;
+  const junkBars = useMemo(() => {
+    const byDate = new Map(junkRows.map((h) => [h.log_date, h.count]));
+    if (len <= 14) {
+      return {
+        every: 1,
+        data: eachDay(from, to).map((d) => ({ label: fmt(d, { day: 'numeric' }), value: byDate.get(d) ?? 0, hint: `${fmt(d, { weekday: 'short', day: 'numeric', month: 'short' })}: ${byDate.get(d) ?? 0}` })),
+      };
+    }
+    const w = weeklyCounts(new Set<string>(), from, to, settings.weekStart);
+    const data = w.map((x) => {
+      let sum = 0;
+      for (const d of eachDay(x.start < from ? from : x.start, addDays(x.start, 6) > to ? to : addDays(x.start, 6))) sum += byDate.get(d) ?? 0;
+      return { label: fmt(x.start, { day: 'numeric', month: 'short' }), value: sum, hint: `Week of ${fmt(x.start, { day: 'numeric', month: 'short' })}: ${sum}` };
+    });
+    return { every: Math.max(1, Math.ceil(data.length / 8)), data };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [habits, from, to, len, settings.weekStart]);
   const pct = (n: number, d: number) => (d ? Math.round((n / d) * 100) : 0);
 
   const bySubject = useMemo(() => {
@@ -107,6 +127,7 @@ export default function StatsView({ state }: { state: AppState }) {
         <Tile color="var(--c-gym)" big={`${countIn(sets.gym, from, to)}`} sub={`/ ${len}`} label="Gym days" note={`${pct(countIn(sets.gym, from, to), len)}% consistent`} />
         <Tile color="var(--c-dsa)" big={`${countIn(sets.dsa, from, to)}`} sub={`/ ${len}`} label="DSA days" note={dsaProblems ? `${dsaProblems} problems` : `${pct(countIn(sets.dsa, from, to), len)}%`} />
         <Tile color="var(--c-mess)" big={`${pct(meals, len * 3)}%`} label="Mess meals" note={`${meals} of ${len * 3} logged`} />
+        <Tile color="var(--c-junk)" big={`${junkTotal}`} label="Junk food" note={junkTotal ? `${junkDays} day${junkDays === 1 ? '' : 's'} · ${(junkTotal / len).toFixed(1)}/day` : 'none logged'} />
       </div>
 
       <div className="section-title">
@@ -158,6 +179,14 @@ export default function StatsView({ state }: { state: AppState }) {
           </div>
         </section>
       </div>
+
+      <div className="section-title">
+        <h2>Junk food</h2>
+        <span className="small muted">{len <= 14 ? 'times per day' : 'times per week'}</span>
+      </div>
+      <section className="card">
+        <BarChart data={junkBars.data} color="var(--c-junk)" labelEvery={junkBars.every} />
+      </section>
 
       <div className="section-title">
         <h2>Streaks</h2>
